@@ -69,14 +69,37 @@ const POPULAR_PACKAGES = [
   'xss', 'sanitize-html', 'dompurify',
 ];
 
+// Well-known legitimate packages that are short or look like typosquats but aren't
+const KNOWN_SAFE = new Set([
+  'ms', 'qs', 'on', 'ee', 'ip', 'he', 'os', 'pg', 'pn',
+  'co', 'is', 'to', 'yn', 'or', 'pi', 'rc',
+  ...POPULAR_PACKAGES,
+]);
+
+// Trusted scopes that should NOT trigger scope confusion
+const TRUSTED_SCOPES = new Set([
+  '@types', '@babel', '@emotion', '@testing-library', '@angular',
+  '@vue', '@nuxt', '@nestjs', '@prisma', '@apollo', '@aws-sdk',
+  '@commitlint', '@eslint', '@swc', '@biomejs', '@parcel',
+  '@playwright', '@storybook', '@tanstack', '@trpc', '@vercel',
+  '@vitejs', '@remix-run', '@astrojs', '@nextui-org', '@radix-ui',
+  '@headlessui', '@grpc', '@hapi', '@fastify', '@types',
+]);
+
 /**
  * Check if a package name looks like a typosquat of a popular package.
  * @param {string} name - Package name to check
  * @returns {{ isTyposquat: boolean, similarTo: string | null, distance: number | null, pattern: string | null }}
  */
 export function detectTyposquat(name) {
-  // Skip if it IS a popular package
-  if (POPULAR_PACKAGES.includes(name)) {
+  // Skip if it IS a popular or known-safe package
+  if (KNOWN_SAFE.has(name)) {
+    return { isTyposquat: false, similarTo: null, distance: null, pattern: null };
+  }
+
+  // Skip packages from trusted scopes
+  const scopeMatch = name.match(/^(@[^/]+)\//); 
+  if (scopeMatch && TRUSTED_SCOPES.has(scopeMatch[1])) {
     return { isTyposquat: false, similarTo: null, distance: null, pattern: null };
   }
 
@@ -95,13 +118,16 @@ export function detectTyposquat(name) {
 
   // Check Levenshtein distance
   for (const popular of POPULAR_PACKAGES) {
+    // Skip very short names — too many false positives (ms vs ws, qs vs ws, etc.)
+    if (name.length <= 2 || popular.length <= 2) continue;
+
     // Only compare packages of similar length to reduce false positives
     if (Math.abs(name.length - popular.length) > 2) continue;
 
     const distance = levenshtein(name, popular);
 
-    // Strict threshold: distance of 1 for short names, 2 for longer ones
-    const threshold = popular.length <= 5 ? 1 : 2;
+    // Strict threshold: distance of 1 for short names, 2 for longer ones (8+ chars)
+    const threshold = popular.length <= 6 ? 1 : 2;
 
     if (distance > 0 && distance <= threshold) {
       return {
