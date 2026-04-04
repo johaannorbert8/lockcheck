@@ -83,12 +83,15 @@ export async function analyzeFreshness(current, previous, options = {}) {
 
     // Check if deprecated
     if (meta.deprecated) {
+      const deprecationMsg = typeof meta.deprecated === 'string' && meta.deprecated.trim()
+        ? meta.deprecated.trim()
+        : 'No deprecation message provided.';
       findings.push({
         severity: 'warning',
         name,
         version: pkg?.version || 'unknown',
-        message: `Package is deprecated`,
-        detail: `Deprecated packages may have known vulnerabilities and should be replaced.`,
+        message: `Package is deprecated: ${deprecationMsg}`,
+        detail: `Deprecated packages may have known vulnerabilities and should be replaced. Consider migrating to an actively maintained alternative.`,
       });
     }
   }
