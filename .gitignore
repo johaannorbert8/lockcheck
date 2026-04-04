@@ -1,0 +1,7 @@
+node_modules/
+.lockcheck-snapshot.json
+*.log
+.DS_Store
+coverage/
+dist/
+.env

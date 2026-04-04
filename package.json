@@ -1,0 +1,46 @@
+{
+  "name": "lockcheck",
+  "version": "1.0.0",
+  "description": "Detect malicious dependency diffs in lock files. Catches supply chain attacks before they catch you.",
+  "main": "src/index.js",
+  "bin": {
+    "lockcheck": "./bin/lockcheck.js"
+  },
+  "type": "module",
+  "scripts": {
+    "start": "node bin/lockcheck.js",
+    "test": "node bin/lockcheck.js --json"
+  },
+  "keywords": [
+    "security",
+    "npm",
+    "supply-chain",
+    "lockfile",
+    "audit",
+    "dependencies",
+    "cli",
+    "devops",
+    "cybersecurity",
+    "package-lock"
+  ],
+  "author": "Dhanush Nehru <hello@dhanushnehru.com> (https://github.com/DhanushNehru)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DhanushNehru/lockcheck.git"
+  },
+  "bugs": {
+    "url": "https://github.com/DhanushNehru/lockcheck/issues"
+  },
+  "homepage": "https://github.com/DhanushNehru/lockcheck#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "bin/",
+    "src/",
+    "action.yml",
+    "LICENSE",
+    "README.md"
+  ]
+}
