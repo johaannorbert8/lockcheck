@@ -3,7 +3,7 @@
  * Extracts normalized package data for analysis.
  */
 
-import { readFileSync } from 'node:fs';
+import { readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 /**
@@ -129,7 +129,6 @@ export function readSnapshot(dir) {
  * @param {Map<string, PackageInfo>} packages
  */
 export function saveSnapshot(dir, packages) {
-  const { writeFileSync } = await import('node:fs');
   const snapshotPath = resolve(dir, '.lockcheck-snapshot.json');
 
   const data = {

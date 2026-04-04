@@ -1,0 +1,60 @@
+name: 'lockcheck'
+description: 'Detect malicious dependency diffs in lock files. Catches supply chain attacks before they catch you.'
+author: 'Dhanush Nehru'
+
+branding:
+  icon: 'shield'
+  color: 'green'
+
+inputs:
+  directory:
+    description: 'Directory containing package-lock.json'
+    required: false
+    default: '.'
+  strict:
+    description: 'Fail on warnings (not just criticals)'
+    required: false
+    default: 'false'
+  no-network:
+    description: 'Skip npm registry checks'
+    required: false
+    default: 'false'
+
+outputs:
+  exit-code:
+    description: 'Exit code from lockcheck (0 = safe, 1 = issues found)'
+  findings:
+    description: 'JSON string of all findings'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: Run lockcheck
+      id: lockcheck
+      shell: bash
+      run: |
+        FLAGS=""
+        if [ "${{ inputs.strict }}" = "true" ]; then
+          FLAGS="$FLAGS --strict"
+        fi
+        if [ "${{ inputs.no-network }}" = "true" ]; then
+          FLAGS="$FLAGS --no-network"
+        fi
+
+        npx lockcheck@latest ${{ inputs.directory }} --json $FLAGS > /tmp/lockcheck-results.json 2>&1 || true
+
+        echo "findings=$(cat /tmp/lockcheck-results.json)" >> $GITHUB_OUTPUT
+
+        # Also run with terminal output for the workflow log
+        npx lockcheck@latest ${{ inputs.directory }} $FLAGS || EXIT_CODE=$?
+        echo "exit-code=${EXIT_CODE:-0}" >> $GITHUB_OUTPUT
+
+        if [ "${EXIT_CODE:-0}" -ne 0 ]; then
+          echo "::error::lockcheck detected security issues in your dependencies"
+          exit ${EXIT_CODE}
+        fi
