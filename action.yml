@@ -46,12 +46,12 @@ runs:
           FLAGS="$FLAGS --no-network"
         fi
 
-        npx lockcheck@latest ${{ inputs.directory }} --json $FLAGS > /tmp/lockcheck-results.json 2>&1 || true
+        npx @dhanushnehru/lockcheck@latest ${{ inputs.directory }} --json $FLAGS > /tmp/lockcheck-results.json 2>&1 || true
 
         echo "findings=$(cat /tmp/lockcheck-results.json)" >> $GITHUB_OUTPUT
 
         # Also run with terminal output for the workflow log
-        npx lockcheck@latest ${{ inputs.directory }} $FLAGS || EXIT_CODE=$?
+        npx @dhanushnehru/lockcheck@latest ${{ inputs.directory }} $FLAGS || EXIT_CODE=$?
         echo "exit-code=${EXIT_CODE:-0}" >> $GITHUB_OUTPUT
 
         if [ "${EXIT_CODE:-0}" -ne 0 ]; then

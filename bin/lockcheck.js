@@ -95,7 +95,7 @@ function printHelp() {
 
   ${bold('USAGE')}
 
-    ${green('npx lockcheck')} ${dim('[directory] [options]')}
+    ${green('npx @dhanushnehru/lockcheck')} ${dim('[directory] [options]')}
 
   ${bold('OPTIONS')}
 
@@ -108,16 +108,16 @@ function printHelp() {
   ${bold('EXAMPLES')}
 
     ${dim('# Scan the current directory')}
-    ${green('npx lockcheck')}
+    ${green('npx @dhanushnehru/lockcheck')}
 
     ${dim('# Scan a specific project')}
-    ${green('npx lockcheck ./my-app')}
+    ${green('npx @dhanushnehru/lockcheck ./my-app')}
 
     ${dim('# Use in CI/CD pipeline')}
-    ${green('npx lockcheck --json --strict')}
+    ${green('npx @dhanushnehru/lockcheck --json --strict')}
 
     ${dim('# Offline mode (skip registry checks)')}
-    ${green('npx lockcheck --no-network')}
+    ${green('npx @dhanushnehru/lockcheck --no-network')}
 
   ${bold('HOW IT WORKS')}
 

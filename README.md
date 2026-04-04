@@ -5,7 +5,7 @@
 **Detect malicious dependency diffs in lock files.**
 Catches supply chain attacks before they catch you.
 
-[![npm version](https://img.shields.io/npm/v/lockcheck.svg?style=flat-square&color=cb3837)](https://www.npmjs.com/package/lockcheck)
+[![npm version](https://img.shields.io/npm/v/@dhanushnehru/lockcheck.svg?style=flat-square&color=cb3837)](https://www.npmjs.com/package/@dhanushnehru/lockcheck)
 [![license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/DhanushNehru/lockcheck?style=flat-square&color=yellow)](https://github.com/DhanushNehru/lockcheck/stargazers)
 [![zero deps](https://img.shields.io/badge/dependencies-0-brightgreen?style=flat-square)](package.json)
@@ -22,7 +22,7 @@ Every time you run `npm install`, your lockfile changes. **Nobody reviews those 
 ## ⚡ Quick Start
 
 ```bash
-npx lockcheck
+npx @dhanushnehru/lockcheck
 ```
 
 That's it. No install required. No configuration. No dependencies.
@@ -88,19 +88,19 @@ That's it. No install required. No configuration. No dependencies.
 
 ```bash
 # Scan current directory
-npx lockcheck
+npx @dhanushnehru/lockcheck
 
 # Scan a specific project
-npx lockcheck ./my-app
+npx @dhanushnehru/lockcheck ./my-app
 
 # CI/CD mode (JSON output + strict exit codes)
-npx lockcheck --json --strict
+npx @dhanushnehru/lockcheck --json --strict
 
 # Offline mode (skip npm registry checks)
-npx lockcheck --no-network
+npx @dhanushnehru/lockcheck --no-network
 
 # Show help
-npx lockcheck --help
+npx @dhanushnehru/lockcheck --help
 ```
 
 ## 🏗️ How It Works
@@ -140,7 +140,7 @@ Or use it directly:
 
 ```yaml
 - name: Run lockcheck
-  run: npx lockcheck --strict
+  run: npx @dhanushnehru/lockcheck --strict
 ```
 
 ## 🔧 Options
