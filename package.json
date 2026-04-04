@@ -4,7 +4,7 @@
   "description": "Detect malicious dependency diffs in lock files. Catches supply chain attacks before they catch you.",
   "main": "src/index.js",
   "bin": {
-    "lockcheck": "./bin/lockcheck.js"
+    "lockcheck": "bin/lockcheck.js"
   },
   "type": "module",
   "scripts": {
