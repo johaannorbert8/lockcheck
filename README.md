@@ -32,7 +32,7 @@ That's it. No install required. No configuration. No dependencies.
 ```
 ┌────────────────────────────────────────────────────┐
 │ 🔒 lockcheck                                       │
-│ Supply chain security scanner for lock files        │
+│ Supply chain security scanner for lock files       │
 └────────────────────────────────────────────────────┘
 
   🔴 CRITICAL
@@ -69,7 +69,7 @@ That's it. No install required. No configuration. No dependencies.
 │  → 12 version changes                              │
 ├────────────────────────────────────────────────────┤
 │  🔴 2 critical                                     │
-│  ⚠️  4 warning(s)                                   │
+│  ⚠️  4 warning(s)                                  │
 └────────────────────────────────────────────────────┘
 ```
 
@@ -202,22 +202,12 @@ Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines
 
 **Adding a new analyzer is easy** — create a file in `src/analyzers/`, export a function that returns `{ findings: [] }`, and wire it up in `src/index.js`.
 
-## 📜 License
-
-[MIT](LICENSE) — Dhanush Nehru
-
-## 🔗 Links
-
-- 🐦 Twitter: [@Dhanush_Nehru](https://twitter.com/Dhanush_Nehru)
-- 📝 Blog: [Medium](https://dhanushnehru.medium.com/)
-- 🌐 GitHub: [DhanushNehru](https://github.com/DhanushNehru)
-
----
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 <div align="center">
 
 **If lockcheck helped you, give it a ⭐ — it helps others find it!**
 
-*Built with zero dependencies and pure paranoia.*
+*Built with zero dependencies.*
 
 </div>
